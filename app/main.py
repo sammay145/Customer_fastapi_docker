@@ -8,17 +8,18 @@ from sqlalchemy.orm import Session
 from . import models
 from .database import SessionLocal, engine
 
-# Create tables
+# Create DB tables
 models.Base.metadata.create_all(bind=engine)
-
 
 app = FastAPI()
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
+# Static & template dirs
 app.mount("/static", StaticFiles(directory=os.path.join(BASE_DIR, "static")), name="static")
 templates = Jinja2Templates(directory=os.path.join(BASE_DIR, "templates"))
 
+# Dependency to get DB session
 def get_db():
     db = SessionLocal()
     try:

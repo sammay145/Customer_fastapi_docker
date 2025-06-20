@@ -1,15 +1,13 @@
+import os
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-# Update with your MySQL container credentials (default from docker-compose)
-SQLALCHEMY_DATABASE_URL = "mysql+pymysql://sammay:sammay123@db:3306/customer_db"
+# Load database URL from environment variable
+DATABASE_URL = os.getenv("DATABASE_URL")
 
-
-# Create engine
-engine = create_engine(SQLALCHEMY_DATABASE_URL)
-
-# Create a configured "Session" class
+# Create engine and session
+engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 # Base class for models
